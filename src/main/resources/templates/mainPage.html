@@ -21,185 +21,241 @@
     <!--    Header------------------------------------->
     <div class="row pl-0 ">
         <div class="col-md-12">
+
             <nav class="navbar navbar-dark bg-dark pt-0 pb-0">
-                <nav class="navbar navbar-dark pl-0 pt-0 pb-0" sec:authorize="hasRole('ADMIN')">
+                <!--            Section of drawing info about a user and his roles started-->
+                <nav class="navbar navbar-dark pl-0 pt-0 pb-0">
+
                     <span class="navbar-text text-white pl-0">
                             <h5><b th:text="${user.getEmail()}"></b></h5>
                     </span>
+
                     <span class="navbar-text text-white pl-1 pr-1">
                             <h5> with roles:</h5>
                     </span>
+
                     <span class="navbar-text text-white">
                             <h5 th:text="${user.showPrettyViewOfRoles()}">
                             </h5>
                     </span>
-                </nav>
 
-                <nav class="navbar navbar-dark pl-0 pt-0 pb-0" sec:authorize="hasRole('USER')">
-                    <span class="navbar-text text-white pl-0">
-                            <h5><b th:text="${Users.get(0).getEmail()}"></b></h5>
-                    </span>
-                    <span class="navbar-text text-white pl-1 pr-1">
-                            <h5> with roles:</h5>
-                    </span>
-                    <span class="navbar-text text-white">
-                            <h5 th:text="${Users.get(0).showPrettyViewOfRoles()}">
-                            </h5>
-                    </span>
                 </nav>
-<!--             <span class="navbar-text mr-auto" sec:authorize="hasRole('ADMIN')">&ndash;&gt;-->
-                <!--                    <ul class="navbar-nav mr-auto"  sec:authorize="hasRole('ADMIN')">-->
-                <!--                        <li class="nav-item active">-->
-                <!--                            <div class="text-white"> <h5><b th:text="${user.getEmail()}"></b></h5> <h5 th:text="${' with roles: ' + user.showPrettyViewOfRoles()}">-->
-                <!--                                    </h5></div>-->
-                <!--                        </li>-->
-                <!--                        <li>-->
-                <!--                             <span class="text-white"> <h5 th:text="${' with roles: ' + user.showPrettyViewOfRoles()}">-->
-                <!--                                    </h5></span>-->
-                <!--                        </li>-->
-                <!--                        -->
-                <!--                    <li class="nav-item active">-->
-                <!--                        <span class="text-white"><h4><b th:text="${user.getEmail()}"> </b></h4> </span>-->
-                <!--                    </li>-->
-                <!--                        <li class="nav-item active">-->
-                <!--                        <span class="text-white"><h4> <b th:text="${' with roles: ' + user.showPrettyViewOfRoles()}"> </b></h4> </span>-->
-                <!--                        </li>-->
-                <!--                    </ul>-->
-                <!--                </span>-->
+                <!--            Section of drawing info about a user and his roles ended-->
+
+                <!--                Section Logout started-->
                 <div sec:authorize="isAuthenticated()">
                     <form class="form-inline" action="/logout">
                         <button class="btn btn-dark " type="submit"> logout
                         </button>
                     </form>
                 </div>
+                <!--                Section Logout ended-->
             </nav>
         </div>
     </div>
     <!--    Header ended-->
-    <!--    Main body-->
-    <div class="row mt-0 h-100">
 
+    <!--    Main body started-->
+    <div class="row mt-0 h-100">
         <div class="col-md-12 mt-0 pl-0 pr-0 ">
-            <!--        left side-->
+
             <div class="container-fluid h-100">
                 <div class="row h-100">
+                    <!--                Section of tabs with admin/user panel started-->
                     <div class="col-3 bg-white mt-2 pl-0 pr-0 pt-0">
-
+                        <!--                            if a principal has a admin role, then work this block-->
                         <div sec:authorize="hasRole('ADMIN')" class="nav flex-column nav-pills"
-                             id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link active pl-3" id="v-pills-home-tab" data-toggle="pill"
-                               href="#v-pills-home"
-                               role="tab" aria-controls="v-pills-home" aria-selected="true"><h6 class="ml-2">Admin</h6>
+                             role="tablist" aria-orientation="vertical">
+
+                            <a class="nav-link active pl-4" id="adminTab" data-toggle="pill"
+                               href="#adminPanel"
+                               role="tab" aria-selected="true"><h6 class="ml-2">Admin</h6>
                             </a>
-                            <a class="nav-link pl-3" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
-                               role="tab" aria-controls="v-pills-profile" aria-selected="false"><h6 class="ml-2">
+
+                            <a class="nav-link pl-4" id="profileTab" data-toggle="pill" href="#profileUser"
+                               role="tab" aria-selected="false"><h6 class="ml-2">
                                 User</h6></a>
                         </div>
-
+                        <!--                            if a principal has a user role, then work this block-->
                         <div sec:authorize="hasRole('ADMIN') != true && hasRole('USER') == true"
-                             class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                             class="nav flex-column nav-pills" role="tablist"
                              aria-orientation="vertical">
-                            <a class="nav-link active pl-3" id="v-pills-profile-tab" data-toggle="pill"
-                               href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">User</a>
+
+                            <a class="nav-link active pl-4" id="profileTab" data-toggle="pill"
+                               href="#profileUser" role="tab" aria-selected="true">User</a>
                         </div>
 
                     </div>
-                    <!--                    left side ended-->
+                    <!--                Section of tabs with admin/user panel ended-->
                     <div class="col-9  bg-light pr-0 pt-0">
-                        <!--                        Text panel-->
+                        <!--                        Main panel name started-->
                         <div class="row  pl-3 pr-8" sec:authorize="hasAnyRole('ADMIN') ">
                             <h2>Admin panel</h2>
                         </div>
-                        <div class="row pl-3 pr-8" sec:authorize="hasRole('USER')">
-                            <h2>User panel</h2>
+
+                        <div class="row pl-3 pr-8" sec:authorize="hasRole('USER') && !hasRole('ADMIN')">
+                            <h2>User information page</h2>
                         </div>
-                        <!--Text panel ended-->
+                        <!--                        Main panel name started-->
+
                         <!--Main panel started-->
                         <div class="card bg-light border-0 pr-4">
+                            <!--                            This block, which choose to display either a user information or an admin panel, started-->
+                            <!--                           A block which displayed either an information about all users or a panel of adding new user started-->
                             <ul class="nav nav-tabs p-0">
+
                                 <li class="nav-item">
                                     <a class="nav-link active" data-toggle="tab" href="#description">Users table</a>
                                 </li>
+
                                 <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                                     <a class="nav-link" data-toggle="tab" href="#addnewuser">New User</a>
                                 </li>
+
                             </ul>
+                            <!--                           A block which displayed either an information about all users or a panel of adding new user ended-->
+
                             <div class="tab-content bg-light border pb-0 ">
+                                <!--Block which displayed admin/user panel started-->
                                 <div class="tab-pane fade ml-3 mr-3 mt-2 mb-0 show active" id="description">
-                                    <div class="row bg-white">
-                                        <div class="col-md-12">
-                                        <span class="d-block p-2 bg-light border-bottom border-top"
-                                              style="margin: -10px -15px 10px;">
-                                                    <h4 class="m-2">All users</h4>
-                                        </span>
-                                            <!--                                            Block with table started-->
-                                            <div class="row ">
-                                                <div class="col-md-12 pr-3 pt-0 pl-3"
-                                                     style="overflow: auto; overflow-y: hidden;">
-                                                    <!--                                                Table with users started-->
-                                                    <table class="table table-striped table-hover pb-2 pt-1">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>First name</th>
-                                                            <th>Last name</th>
-                                                            <th>Age</th>
-                                                            <th>Email</th>
-                                                            <th>Role</th>
-                                                            <th sec:authorize="hasRole('ADMIN')">Edit</th>
-                                                            <th sec:authorize="hasRole('ADMIN')">Delete</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <th:block>
-                                                            <tr th:each="u:${Users}">
-                                                                <th th:text="${u.getId()}"
-                                                                    style="vertical-align: middle">>
-                                                                </th>
-                                                                <th th:text="${u.getName()}"
-                                                                    style="vertical-align: middle">>
-                                                                </th>
-                                                                <th th:text="${u.getSurname()}"
-                                                                    style="vertical-align: middle">>
-                                                                </th>
-                                                                <th th:text="${u.getAge()}"
-                                                                    style="vertical-align: middle">>
-                                                                </th>
-                                                                <th th:text="${u.getEmail()}"
-                                                                    style="vertical-align: middle">>
-                                                                </th>
-                                                                <th th:text="${u.showPrettyViewOfRoles()}"
-                                                                    style="vertical-align: middle">>
-                                                                </th>
-                                                                <th sec:authorize="hasRole('ADMIN')">
-                                                                    <button type="button"
-                                                                            class="btn btn-info modalButtonEditUser EditButtonOnTable"
-                                                                            data-toggle="modal"
-                                                                            data-target="#modal-edit">Edit
-                                                                    </button>
-                                                                </th>
-                                                                <th sec:authorize="hasRole('ADMIN')">
-                                                                    <button type="button"
-                                                                            class="btn btn-danger modalButtonDeleteUser DeleteButtonOnTable"
-                                                                            data-toggle="modal"
-                                                                            data-target="#modal-delete">Delete
-                                                                    </button>
-                                                                </th>
+                                    <div class="bg-white tab-content ">
+                                        <!--Block which displayed admin panel started-->
+                                        <div class="tab-pane fade show active" id="adminPanel">
+                                            <div class="col-md-12">
+                                                <!--                                            Discription started-->
+                                                <span class="d-block p-2 bg-light border-bottom border-top"
+                                                      style="margin: -10px -15px 10px;">
+                                                            <h4 class="m-2">All users</h4>
+                                                </span>
+                                                <!--                                            Discription ended-->
+
+                                                <!--                                            Block with table of users started-->
+                                                <div class="row ">
+                                                    <div class="col-md-12 pr-3 pt-0 pl-3"
+                                                         style="overflow: auto; overflow-y: hidden;">
+                                                        <!--                                                Table with users started-->
+                                                        <table class="table table-striped table-hover pb-2 pt-1">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>ID</th>
+                                                                <th>First name</th>
+                                                                <th>Last name</th>
+                                                                <th>Age</th>
+                                                                <th>Email</th>
+                                                                <th>Role</th>
+                                                                <th sec:authorize="hasRole('ADMIN')">Edit</th>
+                                                                <th sec:authorize="hasRole('ADMIN')">Delete</th>
                                                             </tr>
-                                                        </th:block>
-                                                        </tbody>
-                                                    </table>
-                                                    <!--                                                Table with users ended-->
+                                                            </thead>
+                                                            <tbody>
+                                                            <th:block>
+                                                                <tr th:each="u:${Users}">
+                                                                    <th th:text="${u.getId()}"
+                                                                        style="vertical-align: middle">>
+                                                                    </th>
+                                                                    <th th:text="${u.getName()}"
+                                                                        style="vertical-align: middle">>
+                                                                    </th>
+                                                                    <th th:text="${u.getSurname()}"
+                                                                        style="vertical-align: middle">>
+                                                                    </th>
+                                                                    <th th:text="${u.getAge()}"
+                                                                        style="vertical-align: middle">>
+                                                                    </th>
+                                                                    <th th:text="${u.getEmail()}"
+                                                                        style="vertical-align: middle">>
+                                                                    </th>
+                                                                    <th th:text="${u.showPrettyViewOfRoles()}"
+                                                                        style="vertical-align: middle">>
+                                                                    </th>
+                                                                    <th sec:authorize="hasRole('ADMIN')">
+                                                                        <button type="button"
+                                                                                class="btn btn-info modalButtonEditUser EditButtonOnTable"
+                                                                                data-toggle="modal"
+                                                                                data-target="#modal-edit">Edit
+                                                                        </button>
+                                                                    </th>
+                                                                    <th sec:authorize="hasRole('ADMIN')">
+                                                                        <button type="button"
+                                                                                class="btn btn-danger modalButtonDeleteUser DeleteButtonOnTable"
+                                                                                data-toggle="modal"
+                                                                                data-target="#modal-delete">Delete
+                                                                        </button>
+                                                                    </th>
+                                                                </tr>
+                                                            </th:block>
+                                                            </tbody>
+                                                        </table>
+                                                        <!--                                                Table with users ended-->
+                                                    </div>
+                                                </div>
+                                                <!--                                              Block with table of users ended-->
+                                            </div>
+                                        </div>
+                                        <!--Block which displayed admin panel ended-->
+
+                                        <!--Block which displayed user panel started-->
+                                        <div class="tab-pane fade" id="profileUser">
+                                            <div class="col-md-12">
+                                                <!--                                                Discription started-->
+                                                <span class="d-block p-2 bg-light border-bottom border-top"
+                                                      style="margin: -10px -15px 10px;">
+                                                    <h4 class="m-2">About user</h4>
+                                        </span>
+                                                <!--                                                Discription ended-->
+
+                                                <!--                                            Block with info about user started-->
+                                                <div class="row ">
+                                                    <div class="col-md-12 pr-3 pt-0 pl-3"
+                                                         style="overflow: auto; overflow-y: hidden;">
+                                                        <!--                                              Info about users started-->
+                                                        <table class="table table-striped table-hover pb-2 pt-1">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>ID</th>
+                                                                <th>First name</th>
+                                                                <th>Last name</th>
+                                                                <th>Age</th>
+                                                                <th>Email</th>
+                                                                <th>Role</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <th:block>
+                                                                <tr>
+                                                                    <th th:text="${user.getId()}"
+                                                                        style="vertical-align: middle">>
+                                                                    </th>
+                                                                    <th th:text="${user.getName()}"
+                                                                        style="vertical-align: middle">>
+                                                                    </th>
+                                                                    <th th:text="${user.getSurname()}"
+                                                                        style="vertical-align: middle">>
+                                                                    </th>
+                                                                    <th th:text="${user.getAge()}"
+                                                                        style="vertical-align: middle">>
+                                                                    </th>
+                                                                    <th th:text="${user.getEmail()}"
+                                                                        style="vertical-align: middle">>
+                                                                    </th>
+                                                                    <th th:text="${user.showPrettyViewOfRoles()}"
+                                                                        style="vertical-align: middle">>
+                                                                    </th>
+                                                                </tr>
+                                                            </th:block>
+                                                            </tbody>
+                                                        </table>
+                                                        <!--                                                Info about users ended-->
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <!--                                            Block with table ended-->
                                         </div>
+                                        <!--Block which displayed user panel ended-->
                                     </div>
                                 </div>
-                                <div>
-
-                                </div>
+                                <!--Block which displayed panel of adding new user started-->
                                 <div class="tab-pane fade " id="addnewuser" sec:authorize="hasRole('ADMIN')">
+                                    <!--                                            Discription started-->
                                     <div class="row">
                                         <div class="col-md-12">
                                             <span class="d-block p-2 bg-light border-bottom">
@@ -207,30 +263,36 @@
                                             </span>
                                         </div>
                                     </div>
+                                    <!--                                            Discription started-->
                                     <div class="container-fluid d-flex h-100 justify-content-center align-items-center p-0 bg-white pr-1 pt-4">
                                         <div class="row pt-1 pr-" style="width: 300px;">
                                             <div class="col-md-12 pr-3 pt-0 pl-0"
                                                  style="overflow: auto; overflow-y: hidden;">
+                                                <!--                                                Form for the new user started-->
                                                 <form method="post" th:action="@{/admin/add/}"
                                                       th:object="${newUser}">
+
                                                     <div class="form-group">
                                                         <p class="m-0 text-center"><b>First name</b></p>
                                                         <input th:field="*{name}" class="form-control"
                                                                id="firstname" required="required"
                                                                placeholder="Enter name">
                                                     </div>
+
                                                     <div class="form-group">
                                                         <p class="m-0 text-center"><b>Last name</b></p>
                                                         <input th:field="*{surname}" class="form-control"
                                                                id="lastname" required="required"
                                                                placeholder="Enter lastname ">
                                                     </div>
+
                                                     <div class="form-group">
                                                         <p class="m-0 text-center"><b>Age</b></p>
                                                         <input type="number" th:field="*{age}"
                                                                class="form-control" id="age" required="required"
                                                                placeholder="Enter age">
                                                     </div>
+
                                                     <div class="form-group">
                                                         <p class="m-0 text-center"><b>Email</b></p>
                                                         <input type="email" th:field="*{email}"
@@ -238,17 +300,20 @@
                                                                id="email" required="required"
                                                                placeholder="Enter email">
                                                     </div>
+
                                                     <div class="form-group">
                                                         <p class="m-0 text-center"><b>Password</b></p>
                                                         <input th:field="*{password}" class="form-control"
                                                                id="password" required="required"
                                                                placeholder="Enter password">
                                                     </div>
+
                                                     <div class="form-group">
                                                         <p class="m-0 text-center"><b>Role</b></p>
                                                         <select multiple class="form-control" id="role"
                                                                 required="required"
-                                                                placeholder="Choose Role" size="2" name="userRole">
+                                                                placeholder="Choose Role" size="2"
+                                                                name="userRole">
                                                             <option th:each="role : ${roles}"
                                                                     th:value="${role.getId()}"
                                                                     th:text="${role.getRole()}"
@@ -257,11 +322,14 @@
                                                             </option>
                                                         </select>
                                                     </div>
+
                                                     <div class="text-center pb-3">
-                                                        <button type="submit" class="btn btn-success"> Add new user
+                                                        <button type="submit" class="btn btn-success"> Add new
+                                                            user
                                                         </button>
                                                     </div>
                                                 </form>
+                                                <!--                                                Form for the new user ended-->
                                             </div>
                                         </div>
                                     </div>
@@ -269,7 +337,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -281,40 +348,48 @@
     <div id="modal-edit" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
+
                 <div class="modal-header">
                     <h5 class="modal-title">Edit user</h5>
                     <button type="button" class="close" data-dismiss="model">x</button>
                 </div>
                 <div class="modal-body">
+
                     <div class="container-fluid d-flex h-100 justify-content-center align-items-center p-5">
                         <div class="row bg-white" style="width: 300px;">
                             <div class="col rounded p-0">
 
                                 <form id="editForm" method="post" action=""
                                       th:object="${newUser}">
+
                                     <div class="form-group">
                                         <p class="m-0 text-center"><b>ID</b></p>
-                                        <input type="number" class="form-control" id="Id_edit" placeholder="ID" th
+                                        <input type="number" class="form-control" id="Id_edit" placeholder="ID"
+                                               th
                                                th:field="*{id}" disabled="disabled" readonly>
                                     </div>
+
                                     <div class="form-group">
                                         <p class="m-0 text-center"><b>First name</b></p>
                                         <input th:field="*{name}" class="form-control"
                                                id="firstname_edit" required="required"
                                                placeholder="Enter name">
                                     </div>
+
                                     <div class="form-group">
                                         <p class="m-0 text-center"><b>Lastname</b></p>
                                         <input th:field="*{surname}" class="form-control"
                                                id="lastname_edit" required="required"
                                                placeholder="Enter lastname ">
                                     </div>
+
                                     <div class="form-group">
                                         <p class="m-0 text-center"><b>Age</b></p>
                                         <input type="number" th:field="*{age}"
                                                class="form-control" id="age_edit" required="required"
                                                placeholder="Enter age">
                                     </div>
+
                                     <div class="form-group">
                                         <p class="m-0 text-center"><b>Email</b></p>
                                         <input type="email" th:field="*{email}"
@@ -322,12 +397,14 @@
                                                id="email_edit" required="required"
                                                placeholder="Enter email">
                                     </div>
+
                                     <div class="form-group">
                                         <p class="m-0 text-center"><b>Password</b></p>
                                         <input th:field="*{password}" class="form-control"
                                                id="password_edit"
                                                placeholder="Enter password">
                                     </div>
+
                                     <div class="form-group">
                                         <p class="m-0 text-center"><b>Role</b></p>
                                         <select multiple class="form-control" id="role_edit"
@@ -345,11 +422,10 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="modal-footer">
-                    <!--                    <div class="row bg-light pl-2 pr2">-->
                     <button type="close" class="btn btn-secondary " data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary " id="EditButton">Edit</button>
-                    <!--                    </div>-->
                 </div>
             </div>
 
@@ -359,51 +435,62 @@
     <div id="modal-delete" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
+
                 <div class="modal-header">
-                    <h6 class="modal-title">Delete user</h6>
-                    <button type="button" class="close" data-dismiss="model">x</button>
+                    <h5 class="modal-title">Delete user</h5>
+                    <button type="close" data-dismiss="model" class="closeContent">x</button>
                 </div>
+
                 <div class="modal-body">
                     <div class="container-fluid d-flex h-100 justify-content-center align-items-center p-5">
                         <div class="row bg-white" style="width: 300px;">
                             <div class="col rounded p-0">
-                                <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
                                 <form id="deleteForm" method="post" action=""
                                       th:object="${newUser}">
+
                                     <div class="form-group">
                                         <p class="m-0 text-center"><b>ID</b></p>
-                                        <input type="number" class="form-control" id="Id_delete" placeholder="ID"
-                                               disabled="disabled" readonly>
+                                        <input type="number" class="form-control" id="Id_delete"
+                                               placeholder="ID"
+                                               disabled="disabled">
                                     </div>
+
                                     <div class="form-group">
                                         <p class="m-0 text-center"><b>First name</b></p>
                                         <input class="form-control"
                                                id="firstname_delete" disabled="disabled"
                                                placeholder="Enter name">
                                     </div>
+
                                     <div class="form-group">
                                         <p class="m-0 text-center"><b>Lastname</b></p>
                                         <input class="form-control"
                                                id="lastname_delete" disabled="disabled"
                                                placeholder="Enter lastname ">
                                     </div>
+
                                     <div class="form-group">
                                         <p class="m-0 text-center"><b>Age</b></p>
-                                        <input type="number" class="form-control" id="age_delete" disabled="disabled"
+                                        <input type="number" class="form-control" id="age_delete"
+                                               disabled="disabled"
                                                placeholder="Enter age">
                                     </div>
+
                                     <div class="form-group">
                                         <p class="m-0 text-center"><b>Email</b></p>
                                         <input type="email" class="form-control"
                                                id="email_delete" disabled="disabled"
                                                placeholder="Enter email">
                                     </div>
+
                                     <div class="form-group">
                                         <p class="m-0 text-center"><b>Password</b></p>
                                         <input class="form-control"
                                                id="password_delete" disabled="disabled"
                                                placeholder="Enter password">
                                     </div>
+
                                     <div class="form-group">
                                         <p class="m-0 text-center"><b>Role</b></p>
                                         <select multiple class="form-control" id="role_delete"
@@ -421,17 +508,22 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="modal-footer">
+
                     <div class="row bg-light pl-2 pr2">
-                        <button type="close" class="btn btn-secondary pl-2 pr2" data-dismiss="modal">Close</button>
+                        <button type="close" class="btn btn-secondary pl-2 pr2" data-dismiss="modal">Close
+                        </button>
                         <button type="button" class="btn btn-primary pl-2 pr2" id="DeleteButton">Delete</button>
                     </div>
+
                 </div>
             </div>
 
         </div>
     </div>
 </div>
+
 <script>
 
     function setDataToTableLine(tableLine, action) {
@@ -449,23 +541,34 @@
         $('#role_' + action).val(data[5])
 
     }
-
+    //throwing user data to edit modal form
     $('.EditButtonOnTable').click(function () {
         let arrayVal = $(this).parent('th').siblings('th');
         setDataToTableLine(arrayVal, 'edit')
     });
+    //throwing user data to delete modal form
     $('.DeleteButtonOnTable').click(function () {
         let arrayVal = $(this).parent('th').siblings('th');
         setDataToTableLine(arrayVal, 'delete')
     });
-
+    //send data from form to /edit/someId page
     $('#EditButton').click(function () {
         $('#editForm').submit();
     });
-
+    //send data from form to /delete/someId page
     $('#DeleteButton').click(function () {
         $('#deleteForm').submit();
+
     });
+
+    /*flipping between admin and user panels*/
+    $('#adminTab').click(function () {
+        $(selector).show()
+    });
+    $('#profileTab').click(function () {
+        $(selector).show()
+    });
+
 </script>
 </body>
 </html>

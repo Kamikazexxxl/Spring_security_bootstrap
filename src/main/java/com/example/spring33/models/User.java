@@ -89,7 +89,7 @@ public class User implements UserDetails {
     private Boolean enabled;
 
     @Getter
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Role> roles;
 
     public User(String username, String name, String surname, int age, String email, String password, Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Boolean enabled, Set<Role> roles) {

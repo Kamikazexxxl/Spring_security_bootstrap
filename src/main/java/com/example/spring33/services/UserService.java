@@ -95,12 +95,14 @@ public class UserService implements UserDetailsService, UserServiseInterface {
 
         return userRepository.findByUsername(username);
     }
+
     @Override
     @Transactional
     public User findUserByEmail(String username) {
 
         return userRepository.findUserByEmail(username).get();
     }
+
     @Override
     public List<User> findAll() {
 
@@ -137,6 +139,7 @@ public class UserService implements UserDetailsService, UserServiseInterface {
                 defaultRole.add(new Role("USER"));
                 user.setRoles(defaultRole);
             }
+            user.setUsername(user.getName() + " " + user.getEmail());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setAccountNonLocked(true);
             user.setAccountNonExpired(true);
@@ -159,6 +162,7 @@ public class UserService implements UserDetailsService, UserServiseInterface {
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
+        user.setUsername(user.getName() + " " + user.getEmail());
         user.setAccountNonLocked(true);
         user.setAccountNonExpired(true);
         user.setCredentialsNonExpired(true);
