@@ -1,4 +1,4 @@
-package com.example.spring33.configs;
+package com.example.spring.configs;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -11,7 +11,6 @@ import java.io.IOException;
 
 @Component
 public class SuccessUserHandler implements AuthenticationSuccessHandler {
-    // Spring Security использует объект Authentication, пользователя авторизованной сессии.
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException {
         var roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());

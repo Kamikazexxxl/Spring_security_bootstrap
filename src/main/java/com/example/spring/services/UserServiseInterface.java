@@ -1,6 +1,6 @@
-package com.example.spring33.services;
+package com.example.spring.services;
 
-import com.example.spring33.models.User;
+import com.example.spring.models.User;
 
 import javax.transaction.Transactional;
 import java.util.List;

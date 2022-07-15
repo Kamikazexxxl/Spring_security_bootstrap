@@ -1,6 +1,6 @@
-package com.example.spring33.services;
+package com.example.spring.services;
 
-import com.example.spring33.models.Role;
+import com.example.spring.models.Role;
 
 import java.util.List;
 

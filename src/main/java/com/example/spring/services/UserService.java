@@ -1,14 +1,13 @@
-package com.example.spring33.services;
+package com.example.spring.services;
 
-import com.example.spring33.exceptions.UserNotExistsException;
-import com.example.spring33.models.Role;
-import com.example.spring33.models.User;
-import com.example.spring33.repositories.UserRepository;
+import com.example.spring.exceptions.UserNotExistsException;
+import com.example.spring.models.Role;
+import com.example.spring.models.User;
+import com.example.spring.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,66 +27,9 @@ public class UserService implements UserDetailsService, UserServiseInterface {
     public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
-        creatingInitUsers(userRepository);
 
     }
 
-    private void creatingInitUsers(UserRepository userRepository) {
-        Set<Role> temp = new HashSet<>();
-        Role role = new Role();
-        role.setRole("ADMIN");
-        temp.add(role);
-        User admin = new User();
-        admin.setUsername("admin");
-        admin.setName("admin");
-        admin.setSurname("admin");
-        admin.setPassword(passwordEncoder.encode("123"));
-        admin.setAge(5);
-        admin.setRoles(Set.of(new Role("ADMIN")));
-        admin.setEmail("1@r.r");
-        admin.setCredentialsNonExpired(true);
-        admin.setAccountNonLocked(true);
-        admin.setAccountNonExpired(true);
-        admin.setEnabled(true);
-
-        userRepository.save(admin);
-
-        role = new Role();
-        role.setRole("USER");
-        temp.add(role);
-        User user = new User();
-        user.setUsername("us");
-        user.setName("us");
-        user.setSurname("us");
-        user.setPassword(passwordEncoder.encode("123"));
-        user.setAge(5);
-        user.setRoles(Set.of(new Role("USER")));
-        user.setEmail("2@r.r");
-        user.setCredentialsNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setAccountNonExpired(true);
-        user.setEnabled(true);
-
-        userRepository.save(user);
-//        role = new Role();
-//        role.setRole("USER");
-//        temp.add(role);
-//        User user = new User("user", 40, "user@mail.ru",
-//                "123", temp);
-//        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-//        userRepository.save(user);
-//        temp.clear();
-//        role = new Role();
-//        role.setRole("ADMIN");
-//        temp.add(role);
-//        role = new Role();
-//        role.setRole("USER");
-//        temp.add(role);
-//        User sup = new User("sup", 40, "sup@mail.ru",
-//                "123", temp);
-//        sup.setPassword(new BCryptPasswordEncoder().encode(sup.getPassword()));
-//        userRepository.save(sup);
-    }
 
     @Override
     @Transactional

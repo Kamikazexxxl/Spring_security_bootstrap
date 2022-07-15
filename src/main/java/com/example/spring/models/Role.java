@@ -1,4 +1,4 @@
-package com.example.spring33.models;
+package com.example.spring.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

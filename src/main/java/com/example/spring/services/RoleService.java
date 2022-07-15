@@ -1,7 +1,7 @@
-package com.example.spring33.services;
+package com.example.spring.services;
 
-import com.example.spring33.models.Role;
-import com.example.spring33.repositories.RoleRepository;
+import com.example.spring.models.Role;
+import com.example.spring.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

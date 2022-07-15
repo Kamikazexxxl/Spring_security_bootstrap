@@ -1,8 +1,7 @@
-package com.example.spring33.models;
+package com.example.spring.models;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
