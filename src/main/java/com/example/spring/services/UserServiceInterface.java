@@ -2,13 +2,11 @@ package com.example.spring.services;
 
 import com.example.spring.models.User;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserServiseInterface {
+public interface UserServiceInterface {
 
-    @Transactional
     User findUserByUserName(String username);
 
     List<User> findAll();

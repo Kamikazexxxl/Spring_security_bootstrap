@@ -1,29 +1,32 @@
 package com.example.spring.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-@Data
-//@NoArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
+
+
     @Id
     @GeneratedValue
+    @Getter
     private long id;
 
-   // @ManyToMany(mappedBy = "users")
-    @Column
+    @Getter
     private String role;
 
-    @Override
     public String getAuthority() {
         return getRole();
     }
 
+
+    public Role() {
+    }
 
     public Role(String role) {
         this.role = role;
@@ -36,6 +39,6 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return  role;
+        return role;
     }
 }

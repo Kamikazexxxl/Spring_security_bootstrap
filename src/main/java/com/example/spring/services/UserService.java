@@ -19,7 +19,7 @@ import java.util.Set;
 
 
 @Service
-public class UserService implements UserDetailsService, UserServiseInterface {
+public class UserService implements UserDetailsService, UserServiceInterface {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -32,22 +32,17 @@ public class UserService implements UserDetailsService, UserServiseInterface {
 
 
     @Override
-    @Transactional
     public User findUserByUserName(String username) {
-
         return userRepository.findByUsername(username);
     }
 
     @Override
-    @Transactional
     public User findUserByEmail(String username) {
-
         return userRepository.findUserByEmail(username).get();
     }
 
     @Override
     public List<User> findAll() {
-
         return userRepository.findAll();
     }
 
@@ -69,56 +64,27 @@ public class UserService implements UserDetailsService, UserServiseInterface {
         return userRepository.findById(id);
     }
 
+    @Transactional
     @Override
     public void save(User user) {
-        System.out.println(user);
-//        User extracted = userRepository.findUserByEmail(user.getEmail()).or();
-        if (userRepository.findUserByEmail(user.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("User already exists!");
-        } else {
-            if (user.getRoles() == null) {
-                Set<Role> defaultRole = new HashSet<>();
-                defaultRole.add(new Role("USER"));
-                user.setRoles(defaultRole);
-            }
-            user.setUsername(user.getName() + " " + user.getEmail());
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setAccountNonLocked(true);
-            user.setAccountNonExpired(true);
-            user.setCredentialsNonExpired(true);
-            user.setEnabled(true);
-            userRepository.save(user);
-        }
-    }
-
-    @Override
-    public void edit(User user) {
-        User extracted = userRepository.findUserByEmail(user.getEmail()).get();
-        if (user.getRoles() == null) {
-            Set<Role> defaultRole = new HashSet<>();
-            defaultRole.add(new Role("USER"));
-            user.setRoles(defaultRole);
-        }
-        if (user.getPassword() == null) {
-            user.setPassword(extracted.getPassword());
-        } else {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
-        user.setUsername(user.getName() + " " + user.getEmail());
-        user.setAccountNonLocked(true);
-        user.setAccountNonExpired(true);
-        user.setCredentialsNonExpired(true);
-        user.setEnabled(true);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
+    @Transactional
+    @Override
+    public void edit(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+    }
+
+    @Transactional
     @Override
     public void remove(long id) {
         userRepository.deleteById(id);
     }
 
     @Override
-    @Transactional
     public User findByEmail(String email) {
         return userRepository.findUserByEmail(email).orElseThrow(() -> {
             throw new UserNotExistsException("User with this email not exists");

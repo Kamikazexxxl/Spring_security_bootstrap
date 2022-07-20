@@ -4,6 +4,7 @@ import com.example.spring.models.Role;
 import com.example.spring.models.User;
 import com.example.spring.services.RoleServiceInterface;
 import com.example.spring.services.UserService;
+import com.example.spring.services.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,11 +18,11 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    private final UserService userService;
+    private final UserServiceInterface userService;
     private final RoleServiceInterface roleService;
 
     @Autowired
-    public AdminController(UserService userService, RoleServiceInterface roleService) {
+    public AdminController(UserServiceInterface userService, RoleServiceInterface roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
@@ -37,7 +38,6 @@ public class AdminController {
     }
 
     @PostMapping(value = "/add")
-    @Transactional
     public String addNewUser(@ModelAttribute("newUser") User user, @RequestParam(value = "userRole", required = false) ArrayList<Role> roles) {
         user.setRoles(new HashSet<>(roles));
         userService.save(user);
@@ -45,7 +45,6 @@ public class AdminController {
     }
 
     @PostMapping(value = "/edit/{id}")
-    @Transactional
     public String editUser(@PathVariable(name = "id") long id, @ModelAttribute(value = "user") User user,
                            @RequestParam(value = "userRole", required = false) ArrayList<Role> roles) {
         user.setRoles(new HashSet<>(roles));
