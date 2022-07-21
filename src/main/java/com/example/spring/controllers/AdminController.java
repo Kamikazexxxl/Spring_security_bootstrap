@@ -44,7 +44,7 @@ public class AdminController {
         return "redirect:/admin/";
     }
 
-    @PostMapping(value = "/edit/{id}")
+    @PutMapping(value = "/edit/{id}")
     public String editUser(@PathVariable(name = "id") long id, @ModelAttribute(value = "user") User user,
                            @RequestParam(value = "userRole", required = false) ArrayList<Role> roles) {
         user.setRoles(new HashSet<>(roles));

@@ -361,7 +361,7 @@
                         <div class="row bg-white" style="width: 300px;">
                             <div class="col rounded p-0">
 
-                                <form id="editForm" method="POST" action=""
+                                <form id="editForm" th:method="put" th:action="@{/admin/editUser}"
                                       th:object="${newUser}">
 
                                     <div class="form-group">
@@ -448,7 +448,7 @@
                         <div class="row bg-white" style="width: 300px;">
                             <div class="col rounded p-0">
 
-                                <form id="deleteForm" method="delete" action=""
+                                <form id="deleteForm" th:method="delete" action=""
                                       th:object="${newUser}">
 
                                     <div class="form-group">
