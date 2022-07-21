@@ -15,7 +15,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
+
 </head>
+
 <body>
 <div class="container-fluid d-flex flex-column pl-0 pr-0 " style="flex: 1; height:100vh;">
     <!--    Header------------------------------------->
@@ -359,7 +361,7 @@
                         <div class="row bg-white" style="width: 300px;">
                             <div class="col rounded p-0">
 
-                                <form id="editForm" method="post" action=""
+                                <form id="editForm" method="POST" action=""
                                       th:object="${newUser}">
 
                                     <div class="form-group">
@@ -446,7 +448,7 @@
                         <div class="row bg-white" style="width: 300px;">
                             <div class="col rounded p-0">
 
-                                <form id="deleteForm" method="post" action=""
+                                <form id="deleteForm" method="delete" action=""
                                       th:object="${newUser}">
 
                                     <div class="form-group">

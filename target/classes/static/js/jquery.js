@@ -2359,7 +2359,7 @@
         getScript: function (e, t) {
             return w.get(e, void 0, t, "script")
         }
-    }), w.each(["get", "post"], function (e, t) {
+    }), w.each(["get", "post", "delete"], function (e, t) {
         w[t] = function (e, n, r, i) {
             return g(n) && (i = i || r, r = n, n = void 0), w.ajax(w.extend({
                 url: e,
