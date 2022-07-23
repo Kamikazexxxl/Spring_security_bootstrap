@@ -3,13 +3,12 @@ package com.example.spring.controllers;
 import com.example.spring.models.Role;
 import com.example.spring.models.User;
 import com.example.spring.services.RoleServiceInterface;
-import com.example.spring.services.UserService;
 import com.example.spring.services.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import javax.transaction.Transactional;
+
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,7 +37,9 @@ public class AdminController {
     }
 
     @PostMapping(value = "/add")
-    public String addNewUser(@ModelAttribute("newUser") User user, @RequestParam(value = "userRole", required = false) ArrayList<Role> roles) {
+    public String addNewUser(@ModelAttribute("newUser") User user,
+                             @RequestParam(value = "userRole", required = false)
+                             ArrayList<Role> roles) {
         user.setRoles(new HashSet<>(roles));
         userService.save(user);
         return "redirect:/admin/";

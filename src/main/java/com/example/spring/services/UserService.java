@@ -12,10 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 
 @Service
@@ -71,10 +69,13 @@ public class UserService implements UserDetailsService, UserServiceInterface {
         userRepository.save(user);
     }
 
-    @Transactional
     @Override
     public void edit(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User extracted = userRepository.findUserByEmail(user.getEmail()).get();
+        if (user.getPassword() == "") {
+            user.setPassword(extracted.getPassword());
+        } else { user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         userRepository.save(user);
     }
 
